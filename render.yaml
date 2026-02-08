@@ -3,27 +3,15 @@ services:
     name: easycart
     env: docker
     plan: free
-    region: frankfurt  # или oregon, singapore, ohio
+    region: frankfurt
     dockerfilePath: ./Dockerfile
     dockerContext: .
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
+        value: true  # обязательно true!
       - key: APP_URL
         generateValue: true
-      - key: LOG_CHANNEL
-        value: stderr
-      - key: LOG_LEVEL
-        value: error
-      - key: SESSION_DRIVER
-        value: file
-      - key: CACHE_DRIVER
-        value: file
-      - key: QUEUE_CONNECTION
-        value: sync
-      - key: FILESYSTEM_DISK
-        value: local
     healthCheckPath: /
     autoDeploy: true
