@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "install": "echo 'Skipping npm/yarn install' && exit 0",
+    "start": "echo 'PHP app starting via artisan serve' && exit 0"
+  }
+}
