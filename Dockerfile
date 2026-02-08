@@ -1,36 +1,27 @@
 FROM php:8.2-cli
 
-# Устанавливаем только необходимые зависимости для Laravel
+# Устанавливаем зависимости
 RUN apt-get update && apt-get install -y \
     zip \
     unzip \
-    libzip-dev \
-    && docker-php-ext-install \
-    zip \
-    mbstring \
-    pdo
+    libonig-dev \
+    libzip-dev
 
-# Устанавливаем Composer
+# Включаем расширения
+RUN docker-php-ext-install \
+    mbstring \
+    zip
+
+# Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Рабочая директория
 WORKDIR /var/www/html
-
-# Копируем файлы проекта
 COPY . .
 
-# Устанавливаем зависимости Laravel
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+# Laravel
+RUN composer install --no-interaction --optimize-autoloader --no-dev \
+    && chmod -R 775 storage bootstrap/cache
 
-# Создаем необходимые директории
-RUN mkdir -p storage/framework/{sessions,views,cache} \
-    && mkdir -p bootstrap/cache
-
-# Настраиваем права доступа
-RUN chmod -R 775 storage bootstrap/cache
-
-# Экспорт порта
 EXPOSE 8000
 
-# Команда запуска
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
