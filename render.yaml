@@ -3,15 +3,16 @@ services:
     name: easycart
     env: docker
     plan: free
-    region: frankfurt
     dockerfilePath: ./Dockerfile
-    dockerContext: .
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: true  # обязательно true!
+        value: true
       - key: APP_URL
-        generateValue: true
+        value: https://easycart-3opb.onrender.com
+      - key: SESSION_DRIVER
+        value: file
+      - key: DB_CONNECTION
+        value: array
     healthCheckPath: /
-    autoDeploy: true
