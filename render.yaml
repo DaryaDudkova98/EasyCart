@@ -17,12 +17,9 @@ services:
         value: stderr
       - key: LOG_LEVEL
         value: error
-      - key: DB_CONNECTION
-        value: sqlite
-      - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
+      # Убираем все настройки базы данных
       - key: SESSION_DRIVER
-        value: database
+        value: file
       - key: CACHE_DRIVER
         value: file
       - key: QUEUE_CONNECTION
