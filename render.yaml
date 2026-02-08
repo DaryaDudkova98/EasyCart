@@ -1,13 +1,31 @@
 services:
   - type: web
     name: easycart
-    env: php
+    env: docker
     plan: free
-    buildCommand: |
-      composer install --no-interaction --optimize-autoloader --no-dev
-      php artisan key:generate --force
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-      echo "✅ Build completed without frontend compilation"
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        generateValue: true
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/database/database.sqlite
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+    healthCheckPath: /
+    autoDeploy: true
