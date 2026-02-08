@@ -6,13 +6,10 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
-        value: production
+        value: local
       - key: APP_DEBUG
         value: true
       - key: APP_URL
-        value: https://easycart-3opb.onrender.com
-      - key: SESSION_DRIVER
-        value: file
-      - key: DB_CONNECTION
-        value: array
-    healthCheckPath: /
+        generateValue: true
+    healthCheckPath: /test
+    autoDeploy: true
