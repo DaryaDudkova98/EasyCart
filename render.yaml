@@ -1,15 +1,11 @@
-services:
-  - type: web
-    name: easycart
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile
-    envVars:
-      - key: APP_ENV
-        value: local
-      - key: APP_DEBUG
-        value: true
-      - key: APP_URL
-        generateValue: true
-    healthCheckPath: /test
-    autoDeploy: true
+envVars:
+  - key: APP_ENV
+    value: production
+  - key: APP_DEBUG
+    value: true
+  - key: APP_URL
+    generateValue: true
+  # Вместо SQLite используем file для сессий
+  - key: SESSION_DRIVER
+    value: file
+  # И не настраиваем базу данных вообще
