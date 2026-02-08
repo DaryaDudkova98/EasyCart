@@ -1,4 +1,3 @@
-# render.yaml
 services:
   - type: web
     name: easycart
@@ -6,22 +5,9 @@ services:
     plan: free
     buildCommand: |
       composer install --no-interaction --optimize-autoloader --no-dev
+      php artisan key:generate --force
       php artisan config:cache
       php artisan route:cache
       php artisan view:cache
-    startCommand: php artisan serve --host=0.0.0.0 --port=${PORT}
-    healthCheckPath: /
-    autoDeploy: true
-    envVars:
-      - key: APP_ENV
-        value: production
-      - key: APP_DEBUG
-        value: false
-      - key: LOG_CHANNEL
-        value: stderr
-
-databases:
-  - name: easycart-db
-    plan: free
-    databaseName: easycart
-    user: easycart_user
+      echo "✅ Build completed without frontend compilation"
+    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
